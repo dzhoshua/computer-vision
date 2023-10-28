@@ -76,7 +76,7 @@ def is_equal(norm1, norm2):
         #print('norm_copy',norm1_copy)
         if (norm1_copy == norm1) and norm1_copy != norm2:
           return False
-    return norm1_copy == norm2
+    return True
 
 
 img = np.array([
