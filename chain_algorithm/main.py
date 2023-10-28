@@ -54,6 +54,20 @@ def chain(labeled, lbl):
     chain.append(0)
     return chain
 
+def curvature(chain):
+  result = []
+  for i in range(len(chain)):
+    if i == len(chain)-1:
+      result.append(chain[i] - chain[0])
+    else:
+      result.append(chain[i] - chain[i+1])
+  return result
+
+def normalize(chain):
+  for i in range(len(chain)):
+    chain[i] = chain[i] % 8
+  return chain
+
 
 img = np.array([
     [0,0,0,0],
@@ -77,3 +91,22 @@ for i in range(1, labeled.max() + 1):
 
 plt.imshow(labeled)
 plt.show()
+
+fig1 = np.zeros((5,5))
+fig1[1:3, 1:-1] = 1
+fig2 = fig1.T
+
+labeled = label(fig1)
+ch1 = chain(labeled, 1)
+print("chain1:",ch1)
+
+labeled2 = label(fig2)
+ch2 = chain(labeled2, 1)
+print("chain2:",ch2)
+c1 = curvature(ch1)
+c2 = curvature(ch2)
+print(c1)
+print(c2)
+
+print(normalize(c1))
+print(normalize(c2))
