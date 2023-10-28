@@ -68,6 +68,16 @@ def normalize(chain):
     chain[i] = chain[i] % 8
   return chain
 
+def is_equal(norm1, norm2):
+    norm1_copy = norm1.copy()
+    while norm1_copy != norm2:
+        for i in range(len(norm1_copy)-2):
+          norm1_copy.append(norm1_copy.pop(0))
+        #print('norm_copy',norm1_copy)
+        if (norm1_copy == norm1) and norm1_copy != norm2:
+          return False
+    return norm1_copy == norm2
+
 
 img = np.array([
     [0,0,0,0],
@@ -110,3 +120,4 @@ print(c2)
 
 print(normalize(c1))
 print(normalize(c2))
+print("fig1 and fig2 are equal:", is_equal(c1, c2))
