@@ -69,6 +69,8 @@ def normalize(chain):
   return chain
 
 def is_equal(norm1, norm2):
+    if len(norm1) != len(norm2):
+      return False
     norm1_copy = norm1.copy()
     while norm1_copy != norm2:
         for i in range(len(norm1_copy)-2):
