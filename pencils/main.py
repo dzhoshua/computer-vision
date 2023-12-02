@@ -1,5 +1,4 @@
 import cv2
-import matplotlib.pyplot as plt
 from skimage.measure import label, regionprops
 
 pencils_total = 0
