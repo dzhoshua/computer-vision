@@ -5,7 +5,7 @@ import numpy as np
 import time
 
 
-game_screen = {"top": 330, "left": 130,"width": 800, "height": 90}
+#game_screen = {"top": 330, "left": 130,"width": 800, "height": 90}
 offset_screen = {"top": 350, "left": 196, "width": 65, "height": 45}
 upper_bird_screen = {"top": 325, "left": 203, "width": 75, "height": 26}
 
@@ -25,21 +25,22 @@ with mss.mss() as sct:
         diff = time.time() - start
         if diff >= 16:
             start = time.time()
-            count_of_acceletarion +=1
+            count_of_acceletarion += 1
             after_up_sleep -= speed
             offset_screen["width"] += 5
-            upper_bird_screen["width"]+=3
-
-            print("yep")
-        if count_of_acceletarion == 4:
+            upper_bird_screen["width"] += 5
+            print("sleep", after_up_sleep)
+            print("offset", offset_screen["width"])
+            print("bird", upper_bird_screen["width"])
+            
+        if 0.05<= after_up_sleep <= 0.13:
+            speed = 0.007
+        if after_up_sleep <= 0.05:
             speed = 0
           
-        img = get_gray_image(game_screen)
+        #img = get_gray_image(game_screen)
         offset = get_gray_image(offset_screen)
         upper_bird = get_gray_image(upper_bird_screen)
-
-        cv2.imshow("game", img)
-        cv2.imshow("offset", upper_bird)
 
         # down 
         if upper_bird.mean() != 255.0:
