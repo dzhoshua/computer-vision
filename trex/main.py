@@ -5,8 +5,14 @@ import numpy as np
 import time
 
 
-game_screen = {"top": 330, "left": 125, "width": 800, "height": 90}
-offset_screen = {"top": 330, "left": 178, "width": 75, "height": 65}
+game_screen = {"top": 330, "left": 130,"width": 800, "height": 90}
+offset_screen = {"top": 350, "left": 196, "width": 65, "height": 45}
+upper_bird_screen = {"top": 325, "left": 203, "width": 75, "height": 26}
+
+start = time.time()
+after_up_sleep = 0.15
+speed = 0.005
+count_of_acceletarion = 0
 
 def get_gray_image(screen):
     img = np.array(sct.grab(screen))
@@ -15,20 +21,44 @@ def get_gray_image(screen):
     return img
 
 with mss.mss() as sct:
-
     while True:
-    #for i in range(1):
-        #last_time = time.time()
-        
+        diff = time.time() - start
+        if diff >= 16:
+            start = time.time()
+            count_of_acceletarion +=1
+            after_up_sleep -= speed
+            offset_screen["width"] += 5
+            upper_bird_screen["width"]+=3
+
+            print("yep")
+        if count_of_acceletarion == 4:
+            speed = 0
+          
         img = get_gray_image(game_screen)
         offset = get_gray_image(offset_screen)
+        upper_bird = get_gray_image(upper_bird_screen)
+
+        cv2.imshow("game", img)
+        cv2.imshow("offset", upper_bird)
+
         
-        if offset.mean() != 255.0:
-            pyautogui.press('up')
-            time.sleep(0.13)
+        # down 
+        if upper_bird.mean() != 255.0:
             pyautogui.keyDown('down')
-            time.sleep(0.05)
+            time.sleep(0.2)
+            pyautogui.keyUp('down')
+        # jump    
+        elif offset.mean() != 255.0:
+            #time.sleep(0.01)
+            pyautogui.press('up')
+            time.sleep(after_up_sleep)
+            pyautogui.keyDown('down')
+            #time.sleep(0.02)
             pyautogui.keyUp('down')
 
-        cv2.imshow("Game", img)
-        cv2.imshow("Offset", offset)
+        key = cv2.waitKey(1)
+        if key == ord('q'):
+            break
+
+cv2.destroyAllWindows()
+        
