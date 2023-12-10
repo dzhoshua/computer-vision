@@ -41,7 +41,6 @@ with mss.mss() as sct:
         cv2.imshow("game", img)
         cv2.imshow("offset", upper_bird)
 
-        
         # down 
         if upper_bird.mean() != 255.0:
             pyautogui.keyDown('down')
