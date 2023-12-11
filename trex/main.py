@@ -38,9 +38,13 @@ with mss.mss() as sct:
             speed = 0.005
             val = 10
 
-        elif after_up_sleep <= 0.14:
+        if 0 < after_up_sleep <= 0.14:
             speed = 0.01
             val = 20
+        if after_up_sleep - speed <= 0:
+            speed = 0
+            after_up_sleep = 0
+            
         
         offset = get_gray_image(offset_screen)
         upper_bird = get_gray_image(upper_bird_screen)
