@@ -7,11 +7,13 @@ import time
 
 #game_screen = {"top": 330, "left": 130,"width": 800, "height": 90}
 offset_screen = {"top": 350, "left": 196, "width": 65, "height": 45}
-upper_bird_screen = {"top": 325, "left": 203, "width": 75, "height": 26}
+upper_bird_screen = {"top": 325, "left": 203, "width": 70, "height": 26}
 
 start = time.time()
-after_up_sleep = 0.15
-speed = 0.005
+after_up_sleep = 0.16
+bird_sleep = 0.2
+val = 5
+speed = 0.001
 
 def get_gray_image(screen):
     img = np.array(sct.grab(screen))
@@ -22,27 +24,31 @@ def get_gray_image(screen):
 with mss.mss() as sct:
     while True:
         diff = time.time() - start
-        if diff >= 16:
+        if diff >= 10:
             start = time.time()
             after_up_sleep -= speed
-            offset_screen["width"] += 5
-            upper_bird_screen["width"] += 5
+            offset_screen["width"] += val
+            upper_bird_screen["width"] += val
             print("sleep", after_up_sleep)
             print("offset", offset_screen["width"])
             print("bird", upper_bird_screen["width"])
-            
-        if 0.05<= after_up_sleep <= 0.13:
-            speed = 0.007
-        if after_up_sleep <= 0.05:
-            speed = 0
 
+
+        if after_up_sleep <= 0.155:
+            speed = 0.005
+            val = 10
+
+        elif after_up_sleep <= 0.14:
+            speed = 0.01
+            val = 20
+        
         offset = get_gray_image(offset_screen)
         upper_bird = get_gray_image(upper_bird_screen)
 
         # down 
         if upper_bird.mean() != 255.0:
             pyautogui.keyDown('down')
-            time.sleep(0.2)
+            time.sleep(bird_sleep)
             pyautogui.keyUp('down')
         # jump    
         elif offset.mean() != 255.0:
@@ -56,4 +62,3 @@ with mss.mss() as sct:
             break
 
 cv2.destroyAllWindows()
-        
