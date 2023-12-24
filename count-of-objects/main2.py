@@ -15,7 +15,7 @@ cv2.namedWindow("Text", cv2.WINDOW_KEEPRATIO)
 
 c = -1
 while True:
-    rects, circles = 0, 0
+    squares, circles = 0, 0
 
     #buffer = socket.recv()
     c += 1
@@ -35,14 +35,14 @@ while True:
         if  0.2 < contoured_area / (w * h) < 0.7:
             cv2.putText(frame_for_text, "square", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0),2)
             cv2.rectangle(frame_for_text, (x, y), (x + w, y + h), (255, 0, 0), 2)
-            rects += 1
+            squares += 1
         else:
             cv2.putText(frame_for_text, "circle", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255),2)
             cv2.rectangle(frame_for_text, (x, y), (x + w, y + h), (0, 0, 255), 2)
             circles += 1
         
     
-    cv2.putText(frame_for_text, f"rects:{rects}  circles:{circles}  ALL:{rects+circles}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255),2)
+    cv2.putText(frame_for_text, f"rects:{squares}  circles:{circles}  ALL:{squares+circles}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255),2)
     
     cv2.imshow("Text", frame_for_text)
     cv2.imshow("Mask", mask)
