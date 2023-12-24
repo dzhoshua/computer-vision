@@ -42,7 +42,7 @@ while True:
             circles += 1
         
     
-    cv2.putText(frame_for_text, f"rects:{squares}  circles:{circles}  ALL:{squares+circles}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255),2)
+    cv2.putText(frame_for_text, f"squares:{squares}  circles:{circles}  ALL:{squares+circles}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255),2)
     
     cv2.imshow("Text", frame_for_text)
     cv2.imshow("Mask", mask)
